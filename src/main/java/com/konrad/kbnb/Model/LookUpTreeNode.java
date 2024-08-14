@@ -7,4 +7,7 @@ import java.util.Map;
 public class LookUpTreeNode {
     private Map<String, LookUpTreeNode> children;
     private LookUpMatch match;
+
+    public LookUpTreeNode() {}
+
 }

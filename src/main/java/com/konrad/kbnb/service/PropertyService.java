@@ -1,5 +1,6 @@
 package com.konrad.kbnb.service;
 
+import com.konrad.kbnb.Model.LookUpTreeNode;
 import com.konrad.kbnb.Model.PropertyRequestBody;
 import com.konrad.kbnb.entity.Property;
 import com.konrad.kbnb.repository.PropertyRepo;
@@ -33,6 +34,10 @@ public class PropertyService {
 
     public List<Property> getPropertiesWithNameAndMinimumAmountOfStars(String name){
         return propertyRepo.getPropertyWithMinimumStars(name);
+    }
+
+    public LookUpTreeNode getLookUpTree(){
+        return new LookUpTreeNode();
     }
 
 }

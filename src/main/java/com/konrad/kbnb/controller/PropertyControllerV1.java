@@ -37,7 +37,7 @@ public class PropertyControllerV1 {
         return ResponseEntity.ok(new GenericResponse<>(null, propertyService.getPropertiesWithNameAndMinimumAmountOfStars(name)));
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<GenericResponse<Property>> addProperty(@RequestBody PropertyRequestBody propertyBody) {
         return ResponseEntity.ok(new GenericResponse<>(null, propertyService.addProperty(propertyBody)));
     }
@@ -47,7 +47,7 @@ public class PropertyControllerV1 {
         return ResponseEntity.ok(null);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<GenericResponse<Property>> getPropertyByName() {
         //TODO:
         return ResponseEntity.ok(new GenericResponse<>(null, new Property()));

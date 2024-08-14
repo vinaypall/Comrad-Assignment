@@ -4,6 +4,7 @@ public class LookUpMatch {
     private String match;
     private String id;
 
+    public LookUpMatch() {}
     public String getMatch() {
         return match;
     }

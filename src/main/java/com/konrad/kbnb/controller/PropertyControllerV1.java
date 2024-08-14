@@ -5,8 +5,6 @@ import com.konrad.kbnb.Model.LookUpTreeNode;
 import com.konrad.kbnb.Model.PropertyRequestBody;
 import com.konrad.kbnb.entity.Property;
 import com.konrad.kbnb.service.PropertyService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +46,9 @@ public class PropertyControllerV1 {
     }
 
     @GetMapping
-    public ResponseEntity<GenericResponse<Property>> getPropertyByName() {
+    public ResponseEntity<GenericResponse<List<Property>>> getPropertyByName() {
         //TODO:
-        return ResponseEntity.ok(new GenericResponse<>(null, new Property()));
+        return ResponseEntity.ok(new GenericResponse<>(null, List.of(new Property())));
     }
 
     @GetMapping("/page/{pageNum}")

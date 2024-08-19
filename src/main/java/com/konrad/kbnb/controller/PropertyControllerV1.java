@@ -66,6 +66,6 @@ public class PropertyControllerV1 {
     @GetMapping("/lookuptree")
     public ResponseEntity<GenericResponse<LookUpTreeNode>> getPropertyLookupTree(){
         //TODO: get Property look up tree
-        return ResponseEntity.ok(new GenericResponse<>(null, new LookUpTreeNode()));
+        return ResponseEntity.ok(new GenericResponse<>(null, propertyService.getLookUpTree()));
     }
 }

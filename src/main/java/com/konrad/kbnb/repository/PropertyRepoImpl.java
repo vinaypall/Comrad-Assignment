@@ -1,6 +1,7 @@
 package com.konrad.kbnb.repository;
 
 import com.konrad.kbnb.entity.Property;
+import com.konrad.kbnb.exception.RestrictedPropertyException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;

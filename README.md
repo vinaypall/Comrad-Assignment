@@ -24,7 +24,7 @@ Make sure that you have nothing running on port 8080 if you have anything runnin
 
 
 ### Get property by Name
-In this task we are going to add an endpoint that will get all the properties that start with the query parameter `name` edit the `getPropertyByName` method in the `PropertyControllerV1.java` file
+In this task we are going to add an endpoint that will get all the properties that contain the query parameter `name` edit the `getPropertyByName` method in the `PropertyControllerV1.java` file
 
 edit the `PropertyControllerV1.java`, `PropertyService.java` and `PropertyRepo.java` file as needed to complete the task
 
@@ -50,8 +50,10 @@ Navigate to `getPropertiesWithMinimumStars`
 
 
 ### Add unit tests for Property Service
-1 test for happy path results 
-1 test for error
+Add a unit tests to the `PropertyServiceTest.java` class for the `getFakeProperty` method
+- 1 unit test named `Fake Property Happy Path` for the happy path of returning a fake property 
+- 1 unit test named `Restricted Name Should Throw Error` for when an error should be thrown if the property name is `"restricted"`
+- 1 unit test named `Response Includes Should Put In a Real Name` that verifies if the input name is `"name"` it will return a property that has a name of `Put in a real name`
 
 
 ### Get Super hosts
@@ -95,7 +97,7 @@ Add the `Spring Boot Starter Validation` dependency in `build.gradle` and add th
 
 Modify the `PropertyRequestBody.java` class to make sure the name is not null and rate is greater than 100
 
-Add Exception handling to the controller send back a 400 status code with the response
+Add Exception handling to the controller send back a response with a status code of 400 and a message with the text `"Request body invalid"`
 
 
 ### Add Reservation

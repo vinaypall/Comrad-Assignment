@@ -3,6 +3,7 @@ package com.konrad.kbnb.service;
 import com.konrad.kbnb.Model.LookUpTreeNode;
 import com.konrad.kbnb.Model.PropertyRequestBody;
 import com.konrad.kbnb.entity.Property;
+import com.konrad.kbnb.exception.RestrictedPropertyException;
 import com.konrad.kbnb.repository.PropertyRepo;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,9 @@ public class PropertyService {
 
     public Property getFakeProperty(String name){
         Property property = propertyRepo.getFakeProperty(name);
-        return propertyRepo.save(property);
+        if(property.getName().equals("restricted"))throw new RestrictedPropertyException("restricted");
+        if(property.getName().equals("name"))property.setName("Put in a real name");
+        return property;
     }
 
     public List<Property> getPropertiesWithNameAndMinimumAmountOfStars(String name){

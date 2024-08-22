@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "7047aae7-f92b-4d1a-8332-53f80202b59b",
+		"name": "SpringBoot KBNB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11307367"
+	},
+	"item": [
+		{
+			"name": "add Property",
+			"item": [
+				{
+					"name": "Add Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"let requestBody = JSON.parse(pm.request.body);",
+									"",
+									"pm.test(\"returned name matches request body name\", () => { ",
+									"    pm.expect(response.data.name).to.eql(requestBody.name);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"My House\",\n    \"rate\": 500.0,\n    \"city\": \"Mississauga\",\n    \"houseType\": \"House\",\n    \"country\": \"CA\",\n    \"placeType\": \"Shared room\",\n    \"imageSrc\": \"https://images.pexels.com/photos/262048/pexels-photo-262048.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260\",\n    \"stars\": 3,\n    \"territory\": \"Ontario\",\n    \"idSlug\": \"sun-ski-paradise-year-round-fun-and-relaxation\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/property",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"property"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Property get 400 code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(response.message).to.eql(\"Request body invalid\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"My House\",\n    \"rate\": 99.0,\n    \"city\": \"Mississauga\",\n    \"houseType\": \"House\",\n    \"country\": \"CA\",\n    \"placeType\": \"Shared room\",\n    \"imageSrc\": \"https://images.pexels.com/photos/262048/pexels-photo-262048.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260\",\n    \"stars\": 3,\n    \"territory\": \"Ontario\",\n    \"idSlug\": \"sun-ski-paradise-year-round-fun-and-relaxation\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/property",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"property"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add Reservation",
+			"item": [
+				{
+					"name": "Add Reservation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"let requestBody = JSON.parse(pm.request.body);",
+									"",
+									"pm.test(\"added reservation property has matching id\", function () {",
+									"    pm.expect(jsonData.data.property.id).eql(requestBody.reservationPropertyId);",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reservationDate\": \"2024-09-11\",\n    \"numberOfGuests\": \"2\",\n    \"reservationPropertyId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Reservation get 400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"message says date unavailable\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(jsonData.message).eql(\"Reservation date unavailable\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reservationDate\": \"2024-09-11\",\n    \"numberOfGuests\": \"2\",\n    \"reservationPropertyId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/reservation/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservation",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Property by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/property/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"property",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Properties by name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let name = pm.request.url.query.toObject()['name'];",
+							"var jsonData = pm.response.json();",
+							"",
+							"jsonData.data.forEach((property) =>{",
+							"    pm.test(`check items contain name ${property.name}`, function () {",
+							"        pm.expect(property.name).to.include(name);",
+							"    });",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/property?name=Cozy",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"property"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Cozy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get fake Property by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/property/fake?name=name",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"property",
+						"fake"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "name"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Properties with minimum stars",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let params = pm.request.url.query.toObject();",
+							"let name = params['name'];",
+							"let stars = params['stars'];",
+							"var jsonData = pm.response.json();",
+							"",
+							"jsonData.data.forEach((property) =>{",
+							"        pm.test(`check items contain name and minimum star, ${property.name} ${property.stars}`, function () {",
+							"        pm.expect(property.name).to.include(name);",
+							"        pm.expect(property.stars).to.above(Number(stars))",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/property/minstars?name=&stars=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"property",
+						"minstars"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": ""
+						},
+						{
+							"key": "stars",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Property by page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/property/page/:page",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"property",
+						"page",
+						":page"
+					],
+					"variable": [
+						{
+							"key": "page",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Properties superhost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let superHosts = [",
+							"        3,",
+							"        9,",
+							"        12,",
+							"        13,",
+							"        22,",
+							"        27,",
+							"        34",
+							"    ];",
+							"",
+							"pm.test(\"right super Hosts\", function () {",
+							"    var responseSuperHosts = pm.response.json().data;",
+							"    let difference = superHosts.filter(x => !responseSuperHosts.includes(x))",
+							"    console.log(difference);",
+							"    pm.expect(difference.length).to.eql(0);",
+							"    pm.expect(responseSuperHosts.length).to.eql(superHosts.length)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/property/superhost",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"property",
+						"superhost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Properties LookupTree",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let propertyNames = [",
+							"    'A Diamond in the Rough.',",
+							"    'Aspen Lodge Downtown Large Beautiful Chalet ',",
+							"    'Amazing  Nomad Apt in the Center Of Manhattan',",
+							"    'Beautiful Oceanfront Condo Development in Flamingo!',",
+							"    'Beyond The Door',",
+							"    'Casa Vida - Surfside Unique Hidden Gem',",
+							"    'Cute n Cozy Townhouse for 2!',",
+							"    'Charming 1BD Apartment near Empire State building'",
+							"]",
+							"",
+							"",
+							"propertyNames.forEach((property) =>{",
+							"    pm.test(`check ${property} exists as match`, function () {",
+							"        let jsonData = pm.response.json().data;",
+							"        let currentNode = jsonData;",
+							"        for(const character of property){",
+							"            if(currentNode[character]){",
+							"                currentNode=currentNode[character];",
+							"            }",
+							"            else{",
+							"                pm.expect(true).to.eql(false);",
+							"            }",
+							"        }",
+							"        if(!currentNode.match){",
+							"            pm.expect(true).to.eql(false);",
+							"        }",
+							"    });",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/property/lookuptree",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"property",
+						"lookuptree"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete a property",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/property/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"property",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

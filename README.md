@@ -24,7 +24,7 @@ Make sure that you have nothing running on port 8080 if you have anything runnin
 
 Postman is an api testing tool that where you can make requests and verify the data coming in, the collection has tests so after you submit a request you can check the test results after to verify your work. 
 
-to use the postman collection install and open postman and import the collection and start making requests
+to use the postman collection install and open postman and import the `SpringBootKBNB.postman_collection.json` file and start making requests
 
 ## Tasks
 

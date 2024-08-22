@@ -20,6 +20,12 @@ you can also go to the `KbnbApplication.java` right click on it and on the conte
 
 Make sure that you have nothing running on port 8080 if you have anything running on port 8080 in the `application.properties` file add `server.port=<portNum>` 
 
+### Postman Collection
+
+Postman is an api testing tool that where you can make requests and verify the data coming in, the collection has tests so after you submit a request you can check the test results after to verify your work. 
+
+to use the postman collection install and open postman and import the collection and start making requests
+
 ## Tasks
 
 
@@ -42,7 +48,7 @@ edit the `PropertyControllerV1.java`, `PropertyService.java` and `PropertyRepo.j
 ### Fix Endpoint
 In this task you will fix a endpoint that has does not satisfy the requirements
 
-the `/api/property/minstars` endpoint should accept both `name`(String) and `stars`(double) query parameters and should return a list of properties that contain the `name` query param and has at least the amount of stars as the `stars` query param 
+the `/api/property/minstars` endpoint should accept both `name`(String) and `stars`(int) query parameters and should return a list of properties that contain the `name` query param and has at least the amount of stars as the `stars` query param 
 
 The query used to retrieve the data should be parameterized for security purposes  
 
@@ -68,7 +74,7 @@ edit the `PropertyControllerV1.java`, `PropertyService.java` and `PropertyRepo.j
 ### Property Lookup Tree
 
 In this task you are going to be constructing a Lookup tree of all the properties
-This function receives the search text entered by the user, and an object that represents a tree containing each property grouped by the letters in its name. For example if there were 3 properties named "B", "Bar" and "Baz" then propertyLookupTree would be:
+This function gets the property names and constructs an object that represents a tree containing each property grouped by the letters in its name. For example if there were 3 properties named "B", "Bar" and "Baz" then propertyLookupTree would be:
 ```json
 {
   b: {
@@ -93,11 +99,11 @@ In the response make sure the Json returned does not include null values
 
 in this task you will be validating incoming request objects. 
 
-Add the `Spring Boot Starter Validation` dependency in `build.gradle` and add the `@Valid` notation in the `addProperty` method in the `PropertyControllerV1` class. 
+in the `addProperty`method in the `PropertyControllerV1.java` class validate the incoming `PropertyRequestBody` object and make sure the `name` is not null and `rate` is greater than 100 
 
-Modify the `PropertyRequestBody.java` class to make sure the name is not null and rate is greater than 100
+Recommend using the `Spring Boot Starter Validation` dependency and a controller advice
 
-Add Exception handling to the controller send back a response with a status code of 400 and a message with the text `"Request body invalid"`
+If the object fails validation send back a response with a status code of 400 and a message with the text `"Request body invalid"`
 
 
 ### Add Reservation
@@ -114,5 +120,5 @@ create a controller that has a controller mapping of `api/reservation` and a Pos
 ```
 After the reservation has been added return the Entity created with a Http Status code of `201`
 
-Add a check to the endpoint where if the reservation already exists for a property then we want to return a `400` response code and add a message to the response `Reservation date unavailable`
+Add a check to the endpoint where if the reservation already exists for a property on that date then we want to return a `400` response code and add a message to the response `Reservation date unavailable`
 

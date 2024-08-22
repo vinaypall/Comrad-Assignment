@@ -26,7 +26,7 @@ public class PropertyControllerV1 {
     }
 
     @GetMapping("/fake")
-    public ResponseEntity<GenericResponse<Property>> getPropertyById(@RequestParam("name") String name) {
+    public ResponseEntity<GenericResponse<Property>> getFakePropertyById(@RequestParam("name") String name) {
         return ResponseEntity.ok(new GenericResponse<>(null, propertyService.getFakeProperty(name)));
     }
 
@@ -58,9 +58,9 @@ public class PropertyControllerV1 {
     }
 
     @GetMapping("/superhost")
-    public ResponseEntity<GenericResponse<List<Integer>>> getSuperHosts(){
+    public ResponseEntity<GenericResponse<List<Long>>> getSuperHosts(){
         //TODO: get super hosts from properties
-        return ResponseEntity.ok(new GenericResponse<>(null, List.of()));
+        return ResponseEntity.ok(new GenericResponse<>(null, propertyService.getSuperHost()));
     }
 
     @GetMapping("/lookuptree")

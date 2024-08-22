@@ -1,23 +1,28 @@
 package com.konrad.kbnb.Model;
 
 public class LookUpMatch {
-    private String match;
-    private String id;
+    private String name;
+    private Long id;
+
+    public LookUpMatch(String name, long id) {
+        this.name = name;
+        this.id = id;
+    }
 
     public LookUpMatch() {}
-    public String getMatch() {
-        return match;
+    public String getName() {
+        return name;
     }
 
-    public void setMatch(String match) {
-        this.match = match;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

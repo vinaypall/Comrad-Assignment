@@ -1,5 +1,6 @@
 package com.konrad.kbnb.service;
 
+import com.konrad.kbnb.Model.LookUpMatch;
 import com.konrad.kbnb.Model.LookUpTreeNode;
 import com.konrad.kbnb.Model.PropertyRequestBody;
 import com.konrad.kbnb.entity.Property;
@@ -7,7 +8,10 @@ import com.konrad.kbnb.exception.RestrictedPropertyException;
 import com.konrad.kbnb.repository.PropertyRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class PropertyService {
@@ -37,6 +41,10 @@ public class PropertyService {
 
     public List<Property> getPropertiesWithNameAndMinimumAmountOfStars(String name){
         return propertyRepo.getPropertyWithMinimumStars(name);
+    }
+
+    public List<Long> getSuperHost(){
+        return List.of();
     }
 
     public LookUpTreeNode getLookUpTree(){

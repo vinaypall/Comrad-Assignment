@@ -6,6 +6,10 @@ import com.konrad.kbnb.Model.PropertyRequestBody;
 import com.konrad.kbnb.entity.Property;
 import com.konrad.kbnb.exception.RestrictedPropertyException;
 import com.konrad.kbnb.repository.PropertyRepo;
+
+import jakarta.persistence.EntityNotFoundException;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +26,27 @@ public class PropertyService {
         this.propertyRepo = propertyRepo;
     }
 
+    public List<Property> getPropertyByName(String name) {
+        List<Property> properties = propertyRepo.findByNameStartingWith(name);
+        return properties;
+    }
+
+    public boolean deleteProperty(Long id) {
+        if (propertyRepo.existsById(id)) { 
+            propertyRepo.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+     
+    public List<Property> getPropertiesPage(int pageNum, int pageSize) {
+        Page<Property> propertyPage = propertyRepo.findAll(PageRequest.of(pageNum, pageSize));
+        return propertyPage.getContent(); // Return the list of properties on the current page
+    }
+    public List<Property> getPropertiesWithNameAndMinimumStars(String name, int stars) {
+        // Retrieve properties that match the name and have at least the specified number of stars
+        return propertyRepo.findByNameContainingAndStarsGreaterThanEqual(name, stars);
+    }
     public Property getProperty(long id){
         Property property = propertyRepo.findById(id);
         return property;

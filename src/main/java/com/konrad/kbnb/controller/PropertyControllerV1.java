@@ -5,6 +5,8 @@ import com.konrad.kbnb.Model.LookUpTreeNode;
 import com.konrad.kbnb.Model.PropertyRequestBody;
 import com.konrad.kbnb.entity.Property;
 import com.konrad.kbnb.service.PropertyService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +30,17 @@ public class PropertyControllerV1 {
     @GetMapping("/fake")
     public ResponseEntity<GenericResponse<Property>> getFakePropertyById(@RequestParam("name") String name) {
         return ResponseEntity.ok(new GenericResponse<>(null, propertyService.getFakeProperty(name)));
+       
     }
 
     @GetMapping("/minstars")
-    public ResponseEntity<GenericResponse<List<Property>>> getPropertiesWithMinimumStars(@RequestParam("name") String name) {
-        return ResponseEntity.ok(new GenericResponse<>(null, propertyService.getPropertiesWithNameAndMinimumAmountOfStars(name)));
+    public ResponseEntity<GenericResponse<List<Property>>> getPropertiesWithMinimumStars(
+        @RequestParam("name") String name,
+        @RequestParam("stars") int stars) {
+        List<Property> properties = propertyService.getPropertiesWithNameAndMinimumStars(name, stars);
+        return ResponseEntity.ok(new GenericResponse<>(null, properties));
     }
+
 
     @PostMapping
     public ResponseEntity<GenericResponse<Property>> addProperty(@RequestBody PropertyRequestBody propertyBody) {
@@ -41,21 +48,29 @@ public class PropertyControllerV1 {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProperty() {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<String> deleteProperty(@PathVariable("id") long id) {
+        boolean isDeleted = propertyService.deleteProperty(id);
+        if (isDeleted) {
+            return ResponseEntity.status(HttpStatus.OK)
+                                 .body("Property successfully deleted");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body("Property not found");
+        }
     }
 
-    @GetMapping
-    public ResponseEntity<GenericResponse<List<Property>>> getPropertyByName() {
-        //TODO:
-        return ResponseEntity.ok(new GenericResponse<>(null, List.of(new Property())));
-    }
+    @GetMapping("/properties")
+    public ResponseEntity<GenericResponse<List<Property>>> getPropertyByName(@RequestParam("name") String name) {
+    List<Property> properties = propertyService.getPropertyByName(name);
+    return ResponseEntity.ok(new GenericResponse<>(null, properties));
+}
 
-    @GetMapping("/page/{pageNum}")
-    public ResponseEntity<GenericResponse<List<Property>>> getPropertyPage() {
-        //TODO:
-        return ResponseEntity.ok(new GenericResponse<>(null, List.of(new Property())));
-    }
+@GetMapping("/page/{pageNum}")
+public ResponseEntity<GenericResponse<List<Property>>> getPropertyPage(@PathVariable int pageNum,
+                                                                       @RequestParam(defaultValue = "10") int pageSize) {
+    List<Property> properties = propertyService.getPropertiesPage(pageNum, pageSize);
+    return ResponseEntity.ok(new GenericResponse<>(null, properties));
+}
 
     @GetMapping("/superhost")
     public ResponseEntity<GenericResponse<List<Long>>> getSuperHosts(){
